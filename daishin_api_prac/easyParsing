@@ -1,0 +1,12 @@
+# 기업 정보 크롤링
+
+import urllib.request
+from bs4 import BeautifulSoup
+code =['005930'] # 해당 기업의 종목코드(A는 입력되어있음)
+for c in code:
+    url="http://comp.fnguide.com/SVO2/ASP/SVD_Invest.asp?pGB=1&gicode=A" + c + "&cID=&MenuYn=Y&ReportGB=&NewMenuID=105&stkGb=701"
+    f = urllib.request.urlopen(url).read()
+    soup=BeautifulSoup(f, 'html.parser')
+    cells = soup.find('tr', {'id': "p_grid1_10"}).find_all('td') # 삼성전자의 PCR 갖고오는 코드
+    for cell in cells:
+        print (cell.string) #2019~2023까지의 정보를 크롤링(자세한건 사이트를 확인)
